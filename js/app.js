@@ -104,6 +104,23 @@ class UI {
     this.expenseAmount.textContent = total;
     return total;
   }
+  editExpense(element) {
+    let id = parseInt(element.dataset.id);
+    let parent = element.parentElement.parentElement.parentElement;
+
+    this.expenseList.removeChild(parent);
+    let expense = this.item.filter(function (item) {
+      return item.id === id;
+    });
+    this.expenseInput.value = expense[0].title;
+    this.amountInput.value = expense[0].amount;
+    let tempList = this.itemList.filter(function (item) {
+      return item.id !== id;
+    });
+    this.itemList = tempList;
+    this.showBalance();
+  }
+  deleteExpense(element) {}
 }
 
 function eventlisteners() {
@@ -122,7 +139,13 @@ function eventlisteners() {
     event.preventDefault();
     ui.submitExpenseForm();
   });
-  expenseList.addEventListener("click", function (event) {});
+  expenseList.addEventListener("click", function (event) {
+    if (event.target.parentElement.classList.contains(edit - icon)) {
+      ui.editExpense(event.target.parentElement);
+    } else if (event.target.parentElement.classList.contains(delete -icon)) {
+      ui.deleteExpense(event.target.parentElement);
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
