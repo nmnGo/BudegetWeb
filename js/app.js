@@ -104,6 +104,7 @@ class UI {
     this.expenseAmount.textContent = total;
     return total;
   }
+
   editExpense(element) {
     let id = parseInt(element.dataset.id);
     let parent = element.parentElement.parentElement.parentElement;
