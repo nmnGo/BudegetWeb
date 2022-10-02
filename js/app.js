@@ -31,7 +31,7 @@ class UI {
     if (expenseValue === "" || amountValue === "" || amountValue < 0) {
       this.expenseFeedback.classList.add("showItem");
 
-      this.expenseFeedback.innerHTML = "<p>value must be non negative </p>;";
+      this.expenseFeedback.innerHTML = "<p>value must be non negative </p>";
       const self = this;
 
       setTimeout(function () {
