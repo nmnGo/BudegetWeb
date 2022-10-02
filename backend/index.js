@@ -1,14 +1,13 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const port = 5000;
 const Expense = require("./models/Expense");
 const Budget = require("./models/Budget");
 const flash = require("connect-flash");
 
-// app.use(flash);
-const db =
-  "mongodb+srv://Naman:budgetapp@cluster0.ll1br.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// app.use(flash)
+const app = express();
+const db = env.db;
 
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,7 +21,7 @@ mongoose
 
 app.get("/", (req, res) => {
   return res.json({
-    "message ": "Hello",
+    "message ": "hello friends",
   });
 });
 // obj={
