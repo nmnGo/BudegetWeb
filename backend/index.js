@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const port = 5000;
+const port = process.env.PORT || 5000;
 const Expense = require("./models/Expense");
 const Budget = require("./models/Budget");
 const flash = require("connect-flash");
+const db = process.env.DB;
 
 // app.use(flash)
 const app = express();
-const db = process.env.DB;
+// const db = process.env.DB;
 
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
