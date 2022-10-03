@@ -19,7 +19,17 @@ class UI {
 
   submitBudgetForm() {
     const val = this.budgetInput.value;
-    if (val === "" || val >= 0) {
+    if (val === "" || val < 0) {
+      this.budgetFeedback.classList.add("showItem");
+      this.budgetFeedback.innerHTML =
+        "<p>Value can not be empty or negative</p>";
+      const self = this;
+      setTimeout(() => {
+        self.budgetFeedback.classList.remove("showItem");
+      }, 3000);
+    } else {
+      // let pre = budgetAmount;
+
       this.budgetAmount.textContent = val;
       this.budgetInput.value = "";
       this.showBalance();
@@ -54,6 +64,35 @@ class UI {
       this.showBalance();
     }
   }
+
+  addExpense(expense) {
+    const div = document.createElement("div");
+    div.classList.add("expense");
+    div.innerHTML = `
+    <div class="expense-item d-flex justify-content-between align-items-baseline">
+    
+    <h6 class="expense-title mb-0 text-uppercase list-item">
+     ${expense.title}
+    </h6>
+    <h5 class="expense-amount mb-0 list-item">${expense.amount}</h5>
+
+    <div class="expense-icons list-item">
+      <a
+        href="#"
+        class="edit-icon mx-2"
+        data-id="${expense.id}"
+      >
+        <i class="fas fa-edit"></i>
+      </a>
+      <a href="#" class="delete-icon" data-id="${expense.id}">
+        <i class="fas fa-trash"></i>
+      </a>
+    </div>
+  </div>
+  `;
+    this.expenseList.appendChild(div);
+  }
+
   showBalance() {
     const expense = this.totalExpense();
     const total = parseInt(this.budgetAmount.textContent) - expense;
@@ -66,36 +105,10 @@ class UI {
       this.balance.classList.add("showGreen");
     }
   }
-  addExpense(expense) {
-    const div = document.createElement("div");
-    div.classList.add("expense");
-    div.innerHTML = `<div
-  class="expense-item d-flex justify-content-between align-items-baseline"
->
-  <h6 class="expense-title mb-0 text-uppercase list-item">
-   ${expense.title}
-  </h6>
-  <h5 class="expense-amount mb-0 list-item">${expense.amount}</h5>
 
-  <div class="expense-icons list-item">
-    <a
-      href="#"
-      class="edit-icon mx-2"
-      data-id="${expense.id}"
-    >
-      <i class="fas fa-edit"></i>
-    </a>
-    <a href="#" class="delete-icon" data-id="${expense.id}">
-      <i class="fas fa-trash"></i>
-    </a>
-  </div>
-</div>
-`;
-    this.expenseList.appendChild(div);
-  }
   totalExpense() {
     let total = 0;
-    if (this.length() > 0) {
+    if (this.itemList.length > 0) {
       total = this.itemList.reduce(function (acc, curr) {
         acc += curr.amount;
         return acc;
